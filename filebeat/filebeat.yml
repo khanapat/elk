@@ -1,0 +1,26 @@
+#filebeat.prospectors:
+#- type: log
+#  enabled: true
+#  paths:
+#    - /var/lib/docker/containers/*/*-json.log
+#  tail_files: true
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+processors:
+  - add_cloud_metadata: ~
+
+output.logstash:
+    hosts: ["logstash:5044"]
+
+# output.file:
+#   path: "/tmp/filebeat"
+#   filename: filebeat

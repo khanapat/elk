@@ -1,0 +1,228 @@
+input {
+	beats {
+		port => 5044
+	}
+}
+
+filter {
+	if [kubernetes][namespace] == "bcvrts" {
+		multiline {
+			pattern => "^[0-9]"
+			negate => true
+			what => "previous"
+		}
+		if "bcvrts" not in [tags] {		
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+%{DATA:function}\s+txnId > %{DATA:txn_id}\s+\|\s+rs > {\"status\":%{INT:status},\"data\":{\"docType\":\"%{DATA:doc_type}\",\"ppTenRefId\":\"%{DATA:ppTen_ref_id}\",\"ppTenNo\":\"%{DATA:ppTen_no}\",\"revision\":%{INT:revision},\"txId\":\"%{DATA:tx_id}\"" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {		
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+%{DATA:function}\s+txnId > %{DATA:txn_id}\s+\|\s++rs > {\"status\":%{INT:status},\"data\":%{DATA:doc_type},\"message\":\"%{DATA:detail}\"" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {		
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+%{DATA:function}\s+txnId > %{DATA:txn_id}\s+\|\s+url > %{DATA:url}\s+\|\s+body > {\"status\":%{DATA:status},\"data\":{\"docType\":\"%{DATA:doc_type}\",\"ppTenRefId\":\"%{DATA:ppTen_ref_id}\",\"ppTenNo\":\"%{DATA:ppTen_no}\",\"revision\":%{INT:revision},\"txId\":\"%{DATA:tx_id}\"" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {		
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+%{DATA:function}\s+txnId > %{DATA:txn_id}\s+\|\s+url > %{DATA:url}\s+\|\s+body > {\"status\":%{DATA:status},\"data\":%{DATA:doc_type},\"message\":\"%{DATA:detail}\"" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {		
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+%{DATA:function}\s+Channel{id: %{DATA:channel_id}, name:\s+%{DATA:channel_name}}\s+%{DATA:detail}:\s+%{DATA:tx_id} to Peer{ id:\s+%{DATA:peer_id}," }
+				add_tag => [ "bcvrts" ]
+			}
+		}		
+		if "bcvrts" not in [tags] {		
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+%{DATA:function}\s+txnId > %{DATA:txn_id}\s+\|\s+fnc >\s+%{DATA:cc_function}\s+\|\s+args >" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+type\s+%{DATA:cc_function}\s+>\s+{\"%{DATA:ppTenDetail}\"" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+sending message=\'%{DATA:txn_id}\'\s+to\s+topic=\'%{DATA:topic}\'" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+type\s+%{DATA:cc_function}\,\s+%{DATA:txn_id}\s+" }
+				add_tag => [ "bcvrts" ]
+			}
+		}		
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+\[Consumer clientId=%{DATA:consumer_client_id},\s+groupId=%{DATA:group_id}\]" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+%{DATA:function}\s+txnId >%{DATA:txn_id}\s+\|\s+res > {\"status\":\"%{DATA:status}\",\"message\":\"%{DATA:detail}\"}" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+partitions revoked: \[%{DATA:revoke}\]" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+partitions assigned: \[%{DATA:assign}\]" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+\[Consumer clientId=%{DATA:client_id}, groupId=%{DATA:group_id}\] Error connecting to node %{DATA:kafka_node}\s+" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{JAVACLASS:java_class}\s+-\s+" }
+				add_tag => [ "bcvrts" ]
+			}
+		}
+		if "bcvrts" not in [tags] {
+			grok {
+				add_tag => [ "bcvrts" ]
+			}
+		}		
+	}
+	if [kubernetes][namespace] == "bccommon" {
+		multiline {
+			pattern => "^[0-9]"
+			negate => true
+			what => "previous"
+		}
+		if "bccommon" not in [tags] {
+			grok {
+				match => { "message" => "\[%{DATA:timestamp_server}\]\s+%{LOGLEVEL:log_level}\s+\[%{DATA:thread}\]" }
+				add_tag => [ "bccommon" ]
+			}
+		}
+		if "bccommon" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+-\s+\[%{LOGLEVEL:log_level}\]\s+%{JAVACLASS:java_class}\s+-\s+" }
+				add_tag => [ "bccommon" ]
+			}
+		}
+		if "bccommon" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:java_class}\]\s+-\s+%{LOGLEVEL:log_level}\s+\[%{DATA:thread}\]\s+-\s+" }
+				add_tag => [ "bccommon" ]
+			}
+		}
+		if "bccommon" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:java_class}\]\s+%{DATA:function}:\s+" }
+				add_tag => [ "bccommon" ]
+			}
+		}
+		if "bccommon" not in [tags] {
+			grok {
+				add_tag => [ "bccommon" ]
+			}
+		}						
+	}
+	if [kubernetes][namespace] == "jedi-frontend" or [kubernetes][namespace] == "jedi-network" {
+		multiline {
+			pattern => "^[0-9]"
+			negate => true
+			what => "previous"
+		}	
+		if "jedi" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{DATA:java_class}\s+-\s+%{DATA:function}\s+RefId\s+>\s+%{DATA:ref_id}\s+\|\s+res\s+>\s+{\"status\":%{DATA:status},\"data\":%{GREEDYDATA:data},\"message\":%{GREEDYDATA:detail}}" }
+				add_tag => [ "jedi" ]
+			}
+		}
+		if "jedi" not in [tags] {
+			grok {
+				match => { "message" => "%{DATA:timestamp_server}\s+\[%{DATA:thread}\]\s+%{LOGLEVEL:log_level}\s+%{DATA:java_class}\s+-\s+%{DATA:function}\s+RefId\s+>\s+%{DATA:ref_id}\s+\|\s+data\s+>\s+{\"refID\":\"%{DATA:body_ref_id}\",\"status\":%{DATA:body_status},\"message\":%{GREEDYDATA:body_message},\"result\":%{GREEDYDATA:body_result}}" }
+				add_tag => [ "jedi" ]
+			}
+		}
+		if "jedi" not in [tags] {
+			grok {
+				add_tag => [ "jedi" ]
+			}
+		}			
+	}
+	if [kubernetes][namespace] == "kong-stack" {
+		if [kubernetes][container][name] == "kong-httplog" {
+			multiline {
+				pattern => "^\-"
+				negate => true
+				what => "previous"
+			}	
+			if "kong" not in [tags] {
+				grok {
+					match => { "message" => "\n{\s+consumer:\s+\n\s+{\s+custom_id:\s+\'%{DATA:custom_id}\',\n\s+created_at:\s+%{DATA:created_at},\n\s+id:\s+\'%{DATA:id}\',\n\s+username:\s+\'%{DATA:username}\'\s+},\n\s+latencies:\s+{\s+request:\s+%{DATA:latencies_request},\s+kong:\s+%{DATA:latencies_kong},\s+proxy:\s+%{DATA:latencies_proxy},\n\s+service:\s+\n\s+{\s+host:\s+\'%{DATA:service_host}\',\n\s+created_at:\s+%{DATA:service_created_at},\n\s+connect_timeout:\s+%{DATA:service_connect_timeout},\n\s+id:\s+\'%{DATA:service_id}\',\n\s+protocol:\s+\'%{DATA:service_protocol}\',\n\s+name:\s+\'%{DATA:service_name}\',\n\s+read_timeout:\s+%{DATA:service_read_timeout},\n\s+port:\s+%{DATA:service_port},\n\s+path:\s+\'%{DATA:service_path}\',\n\s+updated_at:\s+%{DATA:service_updated_at},\n\s+write_timeout:\s+%{DATA:service_write_timeout},\n\s+retries:\s+%{DATA:service_retries}\s+},\n\s+request:\s+\n\s+{\s+querystring:\s+%{DATA:request_querystring},\n\s+size:\s+\'%{DATA:request_size},\n\s+uri:\s+\'%{DATA:request_uri}\',\n\s+url:\s+\'%{DATA:request_url}\',\n\s+headers:\s+\n\s+{\s+host:\s+\'%{DATA:request_header_host}\',\n\s+\'content-type\':\s+\'%{DATA:request_header_content_type}\',\n\s+\'postman-token\':\s+\'%{DATA:request_header_postman_token}\',\n\s+accept:\s+\'%{DATA:request_header_accept}\',\n\s+\'x-consumer-username\':\s+\'%{DATA:request_header_x_consumer_username}\',\n\s+\'cache-control\':\s+\'%{DATA:request_header_cache_control}\',\n\s+\'content-length\':\s+\'%{DATA:request_header_content_length}\',\n\s+\'accept-encoding\':\s+\'%{DATA:request_header_accept_encoding}\',\n\s+\'user-agent\':\s+\'%{DATA:request_header_user_agent}\',\n\s+\'x-consumer-custom-id\':\s+\'%{DATA:request_header_x_consumer_custom_id}\',\n\s+\'x-consumer-id\':\s+\'%{DATA:request_header_x_consumer_id}\',\n\s+connection:\s+\'%{DATA:request_header_connection}\',\n\s+authorization:\s+\'%{DATA:request_header_authorization}\'\s+},\n\s+tls:\s+\n\s+{\s+cipher:\s+\'%{DATA:tls_cipher}\',\n\s+client_verify:\s+\'%{DATA:client_verify}\',\n\s+version:\s+\'%{DATA:tls_version}\'\s+},\n\s+method:\s+\'%{DATA:tls_method}\'\s+},\n\s+client_ip:\s+\'%{DATA:tls_client_ip}\',\n\s+tries:\s+\n\s+\[\s+{\s+balancer_latency:\s+%{DATA:tries_balancer_latency},\n\s+port:\s+%{DATA:tries_port},\n\s+balancer_start:\s+%{DATA:tries_balancer_start},\n\s+ip:\s+\'%{DATA:tries_ip}\'\s+}\s+\],\n\s+authenticated_entity:\s+{\s+id:\s+\'%{DATA:authenticated_entity_id}\'\s+},\n\s+upstream_uri:\s+\'%{DATA:upstream_uri}\',\n\s+response:\s+\n\s+{\s+headers:\s+\n\s+{\s+\'x-kong-proxy-latency\':\s+\'%{DATA:response_header_x_kong_proxy_latency}\',\n\s+\'content-type\':\s+\'%{DATA:response_header_content_type}\',\n\s+date:\s+\'%{DATA:response_header_date}\',\n\s+via:\s+\'%{DATA:response_header_via}\',\n\s+connection:\s+\'%{DATA:response_header_connection}\',\n\s+\'x-kong-upstream-latency\':\s+\'%{DATA:response_header_x_kong_upstream_latency}\',\n\s+\'accenture-request-tracer-id\':\s+\'%{DATA:response_header_accenture_request_tracer_id}\',\n\s+\'transfer-encoding\':\s+\'%{DATA:response_header_transfer_encoding}\'\s+},\n\s+status:\s+%{DATA:response_status},\n\s+size:\s+\'%{DATA:response_size}\'\s+},\n\s+route:\s+\n\s+{\s+id:\s+\'%{DATA:route_id}\',\n\s+updated_at:\s+%{DATA:route_updated_at},\n\s+protocols:\s+\[\s+%{DATA:route_protocols}\s+\],\n\s+created_at:\s+%{DATA:route_created_at},\n\s+service:\s+{\s+id:\s+\'%{DATA:route_service_id}\'\s+},\n\s+name:\s+\'%{DATA:route_name}\',\n\s+preserve_host:\s+%{DATA:route_preserve_host},\n\s+regex_priority:\s+%{DATA:route_regex_priority},\n\s+methods:\s+\[\s+%{DATA:route_methods}\s+\],\n\s+strip_path:\s+%{DATA:route_strip_path},\n\s+https_redirect_status_code:\s+%{DATA:route_https_redirect_status_code},\n\s+paths:\s+\n\s+\[\s+\'%{DATA:route_paths}\',\n\s+\'%{DATA:route_paths}\'\s+\]\s+},\n\s+started_at:\s+%{DATA:started_at}\s+}" }
+					add_tag => [ "kong" ]
+				}
+			}
+			if "kong" not in [tags] {
+				grok {
+					match => { "message" => "\n{\s+latencies:\s+{\s+request:\s+%{DATA:latencies_request},\s+kong:\s+%{DATA:latencies_kong},\s+proxy:\s+%{DATA:latencies_proxy},\n\s+service:\s+\n\s+{\s+host:\s+\'%{DATA:service_host}\',\n\s+created_at:\s+%{DATA:service_created_at},\n\s+connect_timeout:\s+%{DATA:service_connect_timeout},\n\s+id:\s+\'%{DATA:service_id}\',\n\s+protocol:\s+\'%{DATA:service_protocol}\',\n\s+name:\s+\'%{DATA:service_name}\',\n\s+read_timeout:\s+%{DATA:service_read_timeout},\n\s+port:\s+%{DATA:service_port},\n\s+path:\s+\'%{DATA:service_path}\',\n\s+updated_at:\s+%{DATA:service_updated_at},\n\s+write_timeout:\s+%{DATA:service_write_timeout},\n\s+retries:\s+%{DATA:service_retries}\s+},\n\s+request:\s+\n\s+{\s+querystring:\s+%{DATA:request_querystring},\n\s+size:\s+\'%{DATA:request_size},\n\s+uri:\s+\'%{DATA:request_uri}\',\n\s+url:\s+\'%{DATA:request_url}\',\n\s+headers:\s+\n\s+{\s+host:\s+\'%{DATA:request_header_host}\',\n\s+\'content-type\':\s+\'%{DATA:request_header_content_type}\',\n\s+\'postman-token\':\s+\'%{DATA:request_header_postman_token}\',\n\s+accept:\s+\'%{DATA:request_header_accept}\',\n\s+\'cache-control\':\s+\'%{DATA:request_header_cache_control}\',\n\s+\'content-length\':\s+\'%{DATA:request_header_content_length}\',\n\s+\'accept-encoding\':\s+\'%{DATA:request_header_accept_encoding}\',\n\s+\'user-agent\':\s+\'%{DATA:request_header_user_agent}\',\n\s+connection:\s+\'%{DATA:request_header_connection}\',\n\s+authorization:\s+\'%{DATA:request_header_authorization}\'\s+},\n\s+tls:\s+\n\s+{\s+cipher:\s+\'%{DATA:tls_cipher}\',\n\s+client_verify:\s+\'%{DATA:client_verify}\',\n\s+version:\s+\'%{DATA:tls_version}\'\s+},\n\s+method:\s+\'%{DATA:tls_method}\'\s+},\n\s+client_ip:\s+\'%{DATA:tls_client_ip}\',\n\s+tries:\s+%{DATA:tries},\n\s+upstream_uri:\s+\'%{DATA:upstream_uri}\',\n\s+response:\s+\n\s+{\s+headers:\s+\n\s+{\s+\'content-type\':\s+\'%{DATA:response_header_content_type}\',\n\s+server:\s+\'%{DATA:response_header_server}\',\n\s+connection:\s+\'%{DATA:response_header_connection}\',\n\s+\'content-length\':\s+\'%{DATA:response_content_length}\',\n\s+\'www-authenticate\':\s+\'Bearer realm=\"%{DATA:authenticate_bearer_realm}\"\s+error=\"%{DATA:authenticate_error}\"\s+error_description=\"%{DATA:authenticate_error_description}\"\'\s+},\n\s+status:\s+%{DATA:response_status},\n\s+size:\s+\'%{DATA:response_size}\'\s+},\n\s+route:\s+\n\s+{\s+id:\s+\'%{DATA:route_id}\',\n\s+updated_at:\s+%{DATA:route_updated_at},\n\s+protocols:\s+\[\s+%{DATA:route_protocols}\s+\],\n\s+created_at:\s+%{DATA:route_created_at},\n\s+service:\s+{\s+id:\s+\'%{DATA:route_service_id}\'\s+},\n\s+name:\s+\'%{DATA:route_name}\',\n\s+preserve_host:\s+%{DATA:route_preserve_host},\n\s+regex_priority:\s+%{DATA:route_regex_priority},\n\s+methods:\s+\[\s+%{DATA:route_methods}\s+\],\n\s+strip_path:\s+%{DATA:route_strip_path},\n\s+https_redirect_status_code:\s+%{DATA:route_https_redirect_status_code},\n\s+paths:\s+\n\s+\[\s+\'%{DATA:route_paths}\',\n\s+\'%{DATA:route_paths}\'\s+\]\s+},\n\s+started_at:\s+%{DATA:started_at}\s+}" }
+					add_tag => [ "kong" ]
+				}
+			}
+			if "kong" not in [tags] {
+				grok {
+					add_tag => [ "kong" ]
+				}
+			}
+		} else {
+			if "kong" not in [tags] {
+				grok {
+					match => { "message" => "" }
+					add_tag => [ "kong" ]
+				}
+			}			
+		} 			
+	}
+}
+
+output {
+	if 'bcvrts' in [tags] or 'bccommon' in [tags] {
+		elasticsearch {
+			hosts => ["elasticsearch:9200"]
+			index => "vrt-%{+yyyy-MM-dd}"
+		}
+	} else if 'jedi' in [tags] {
+		elasticsearch {
+			hosts => ["elasticsearch:9200"]
+			index => "jedi-%{+yyyy-MM-dd}"
+		}
+	} else if 'kong' in [tags] {
+		elasticsearch {
+			hosts => ["elasticsearch:9200"]
+			index => "kong-%{+yyyy-MM-dd}"
+		}
+	} else {
+		elasticsearch {
+			hosts => ["elasticsearch:9200"]
+			index => "other-%{+yyyy-MM-dd}"	
+		}	
+	} 
+}
+
